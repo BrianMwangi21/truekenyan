@@ -8,7 +8,7 @@ class NavBar extends Component {
                     <a class="navbar-brand" href="index.html">trueKenyan | for the people, by the people</a>
                     <div class="col-md-12 col-lg-6 text-left text-lg-right">
                         <div id="filters" class="filters">
-                            <a href="#" data-filter="*" class="active">Write tomorrow's article</a>
+                            <a href="#tomorrow" data-filter="*" class="active">Write tomorrow's article</a>
                         </div>
                     </div>
                 </div>

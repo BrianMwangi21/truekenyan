@@ -14,7 +14,14 @@ class App extends Component {
     web3: null, 
     accounts: null, 
     contract: null,
-    article : [] };
+    article : [] 
+  };
+
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.getDate = this.getDate.bind(this);
+  };
 
   componentDidMount = async () => {
     try {
@@ -45,6 +52,11 @@ class App extends Component {
   };
 
   getLatestArticle = async () => {
+    // Clean the articles array
+    this.setState( {
+      article: []
+    });
+
     const { contract } = this.state;
 
     // Get the number of articles stored
@@ -59,6 +71,37 @@ class App extends Component {
     });
   };
 
+  handleSubmit = async(event, articleContent) => {
+    event.preventDefault();
+    const data = new FormData(event.target);
+
+    // Now with the data, we create a new article
+    const { accounts, contract } = this.state;
+    await contract.methods.createArticle( 
+      data.get('authorName'),
+      data.get('articleTitle'),
+      articleContent,
+      this.getDate()
+    ).send( {from: accounts[0]});
+
+    // Load the data again
+    this.getLatestArticle();
+  };
+
+  getDate() {
+    const newDate = new Date();
+    const date = newDate.getDate();
+    const month = newDate.getMonth() + 1;
+    const year = newDate.getFullYear();
+    const hours = newDate.getHours();
+    const minute = newDate.getMinutes();
+    const seconds = newDate.getSeconds();
+
+    const timestamp = date + "/" + month + "/" + year + " " + hours + ":" + minute + ":" + seconds;
+
+    return timestamp;
+  };
+
   render() {
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
@@ -66,7 +109,7 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar />
-        <Main article={this.state.article} />
+        <Main article={this.state.article} handleSubmit={this.handleSubmit} />
         <Footer />
       </div>
     );

@@ -8,9 +8,6 @@ class Footer extends Component {
                 <div class="row">
                     <div class="col-sm-12">
                         <p class="mb-1">&copy; Copyright trueKenyan. All Rights Reserved</p>
-                        <div class="credits">
-                            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-                        </div>
                     </div>
                 </div>
                 </div>

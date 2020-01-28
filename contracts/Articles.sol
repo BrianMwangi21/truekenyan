@@ -21,6 +21,9 @@ contract Articles {
     // Variable to keep count of articles
     uint public articlesCount;
 
+    // Event for article creation
+    event articleCreated(uint id, address author, string name, string title, string content, string timestamp );
+
     // Constructor
     constructor() public {
         // The constructor calls private function to create genesis article
@@ -46,5 +49,44 @@ contract Articles {
 
         // Add count of articles for address
         authorArticleCount[msg.sender]++;
+
+        // Emit event
+        emit articleCreated(
+            genesis.id,
+            genesis.authorAdd,
+            genesis.authorName,
+            genesis.articleTitle,
+            genesis.articleContent,
+            genesis.dateCreated
+        );
+    }
+
+    // Public function to add article
+    function createArticle(string memory _author, string memory _title, string memory _content, string memory _timestamp) public {
+        articlesCount++;
+        Article memory new_article = Article(
+            articlesCount,
+            msg.sender,
+            _author,
+            _title,
+            _content,
+            _timestamp
+        );
+
+        // Add the article to mapping
+        articles[articlesCount] = new_article;
+
+        // Add count of articles to address
+        authorArticleCount[msg.sender]++;
+
+        // Emit event
+        emit articleCreated(
+            new_article.id,
+            new_article.authorAdd,
+            new_article.authorName,
+            new_article.articleTitle,
+            new_article.articleContent,
+            new_article.dateCreated
+        );
     }
 }
