@@ -14,13 +14,18 @@ class App extends Component {
     web3: null, 
     accounts: null, 
     contract: null,
-    article : [] 
+    all_articles : [],
+    article : new Object,
+    articleId : 0,
+    totalArticles : 0
   };
 
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getDate = this.getDate.bind(this);
+    this.handleNextClick = this.handleNextClick.bind(this);
+    this.handlePreviousClick = this.handlePreviousClick.bind(this);
   };
 
   componentDidMount = async () => {
@@ -41,7 +46,7 @@ class App extends Component {
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.getLatestArticle);
+      this.setState({ web3, accounts, contract: instance }, this.getArticles);
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -51,23 +56,79 @@ class App extends Component {
     }
   };
 
-  getLatestArticle = async () => {
-    // Clean the articles array
-    this.setState( {
-      article: []
-    });
-
+  getArticles = async() => {
     const { contract } = this.state;
 
     // Get the number of articles stored
-    const totalArticles = await contract.methods.articlesCount().call();
-
-    // Use the number to fetch the latest article
-    const response = await contract.methods.articles(totalArticles).call();
-
-    // Update state with the result
     this.setState( {
-      article: [...this.state.article, response]
+      totalArticles : await contract.methods.articlesCount().call() 
+    });
+
+    // Use the number to fetch all the articles
+    for( var i = 1; i <= this.state.totalArticles; ++i ) {
+      const response = await contract.methods.articles(i).call();
+
+      // Update state with the result
+      this.setState( {
+        all_articles: [...this.state.all_articles, response]
+      });
+
+      // Set the latest article
+      if( i == this.state.totalArticles ) {
+        this.setState( {
+          article: response,
+          articleId : this.state.totalArticles
+        });
+      }
+    }
+
+    // Log all the articles
+    console.log(this.state.all_articles)
+  };
+
+  handlePreviousClick = async(event) => {
+    event.preventDefault();
+
+    // Clear article array
+    this.setState({
+      article : new Object,
+      articleId : 0
+    });
+
+    // Get the previous article
+    const previousId = this.state.articleId - 1;
+
+    if( previousId < 1 ) {
+      previousId = 1;
+    }
+
+    // Send previous id
+    this.setState( {
+      article: this.state.all_articles[previousId],
+      articleId : previousId
+    });
+  };
+
+  handleNextClick = async(event) => {
+    event.preventDefault();
+
+    // Clear article array
+    this.setState({
+      article : new Object,
+      articleId : 0
+    });
+
+    // Get the previous article
+    const nextId = this.state.articleId + 1;
+
+    if( nextId > this.state.totalArticles ) {
+      nextId = this.state.totalArticles;
+    }
+
+    // Send next id
+    this.setState( {
+      article: this.state.all_articles[nextId],
+      articleId : this.state.totalArticles
     });
   };
 
@@ -85,7 +146,7 @@ class App extends Component {
     ).send( {from: accounts[0]});
 
     // Load the data again
-    this.getLatestArticle();
+    this.getArticles();
   };
 
   getDate() {
@@ -109,7 +170,9 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar />
-        <Main article={this.state.article} handleSubmit={this.handleSubmit} />
+        <Main article={this.state.article} handleSubmit={this.handleSubmit}
+          handleNext={this.state.handleNextClick}
+          handlePrevious={this.state.handlePreviousClick} />
         <Footer />
       </div>
     );

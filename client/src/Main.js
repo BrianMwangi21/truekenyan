@@ -23,27 +23,27 @@ class Main extends Component {
         return (
             <div class="site-section">
                 <div class="container">
-                    {
-                        this.props.article.map((article, key) => {
-                            return (
-                                <div>
-                                    <div class="row justify-content-center text-center mb-4">
-                                        <div class="col-5">
-                                            <h1>{article.articleTitle}</h1>
-                                            <p>by <strong>{article.authorName}</strong> at <strong>{article.dateCreated}</strong></p>
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-center mb-4">
-                                            <div class="col-10">
-                                                <hr />
-                                                    { ReactHtmlParser(article.articleContent) }
-                                                <hr />
-                                            </div>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
+                <div>
+                    <div class="row justify-content-center text-center mb-4">
+                        <div class="col-5">
+                            <h1>{this.props.article.articleTitle}</h1>
+                            <p>by <strong>{this.props.article.authorName}</strong> at <strong>{this.props.article.dateCreated}</strong></p>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mb-4">
+                            <div class="col-1">
+                                <button class="form-control" onClick={this.props.handlePrevious} >Prev</button>
+                            </div>
+                            <div class="col-10">
+                                <hr />
+                                    { ReactHtmlParser(this.props.article.articleContent) }
+                                <hr />
+                            </div>
+                            <div class="col-1">
+                                <button class="form-control" onClick={this.props.handleNext} >Next</button>
+                            </div>
+                    </div>
+                </div>
 
                     <div class="row justify-content-center text-center mb-4" style={{ marginTop : "150px" }}>
                         <div class="col-5" id="tomorrow">
