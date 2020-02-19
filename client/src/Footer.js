@@ -6,7 +6,7 @@ class Footer extends Component {
             <footer class="footer" role="contentinfo">
                 <div class="container">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12" style={{"textAlign":"center"}}>
                         <p class="mb-1">&copy; Copyright trueKenyan. All Rights Reserved</p>
                     </div>
                 </div>

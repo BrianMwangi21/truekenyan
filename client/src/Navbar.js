@@ -1,14 +1,15 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 
 class NavBar extends Component {
     render() {
         return (
             <nav class="navbar navbar-light custom-navbar">
                 <div class="container">
-                    <a class="navbar-brand" href="index.html">trueKenyan | for the people, by the people</a>
+                    <a class="navbar-brand" href="/">trueKenyan | for the people, by the people</a>
                     <div class="col-md-12 col-lg-6 text-left text-lg-right">
                         <div id="filters" class="filters">
-                            <a href="#tomorrow" data-filter="*" class="active">Write tomorrow's article</a>
+                            <Link to="/tomorrow">Write tomorrow's article</Link>
                         </div>
                     </div>
                 </div>

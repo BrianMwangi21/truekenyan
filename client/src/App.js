@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import ArticlesContract from "./contracts/Articles.json";
 import getWeb3 from "./getWeb3";
 import Navbar from "./Navbar";
@@ -22,8 +21,6 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.getDate = this.getDate.bind(this);
     this.handleNextClick = this.handleNextClick.bind(this);
     this.handlePreviousClick = this.handlePreviousClick.bind(this);
   };
@@ -132,37 +129,6 @@ class App extends Component {
     });
   };
 
-  handleSubmit = async(event, articleContent) => {
-    event.preventDefault();
-    const data = new FormData(event.target);
-
-    // Now with the data, we create a new article
-    const { accounts, contract } = this.state;
-    await contract.methods.createArticle( 
-      data.get('authorName'),
-      data.get('articleTitle'),
-      articleContent,
-      this.getDate()
-    ).send( {from: accounts[0]});
-
-    // Load the data again
-    this.getArticles();
-  };
-
-  getDate() {
-    const newDate = new Date();
-    const date = newDate.getDate();
-    const month = newDate.getMonth() + 1;
-    const year = newDate.getFullYear();
-    const hours = newDate.getHours();
-    const minute = newDate.getMinutes();
-    const seconds = newDate.getSeconds();
-
-    const timestamp = date + "/" + month + "/" + year + " " + hours + ":" + minute + ":" + seconds;
-
-    return timestamp;
-  };
-
   render() {
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
@@ -170,7 +136,7 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar />
-        <Main article={this.state.article} handleSubmit={this.handleSubmit}
+        <Main article={this.state.article}
           handleNext={this.state.handleNextClick}
           handlePrevious={this.state.handlePreviousClick} />
         <Footer />
