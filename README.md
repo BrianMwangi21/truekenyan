@@ -15,6 +15,6 @@ A blog for the people, by the people
 
 6. Now, install all dependencies and navigate to client/ folder and run "npm run start". The browser will bring a pop-up asking you to connect, accept. All should be well now.
 
-7. At the bottom you'll find the form for a new article. Try filling the fields then submit. Another pop-up will come, accept. Give it a few seconds then it will refresh by itself. If you scroll to the top, your new article will be the latest.
+7. Following the "Write tomorrow's article" link will lead you to another page where you will find the form for a new article. Try filling the fields then submit. Another pop-up will come, accept. Give it a few seconds then it will refresh back to the homepage.
 
 Have fun.
