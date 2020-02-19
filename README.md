@@ -3,7 +3,7 @@ A blog for the people, by the people
 
 # Steps
 
-1.Go to https://metamask.io and install the Metamask plugin. Once installed, it will tell you to create and account. Just follow the steps until you have completed. Initially, it will connect you to the Ethereum Main Network and it will show you 0 ETH. That's fine.
+1. Go to https://metamask.io and install the Metamask plugin. Once installed, it will tell you to create and account. Just follow the steps until you have completed. Initially, it will connect you to the Ethereum Main Network and it will show you 0 ETH. That's fine.
 
 2. From the drop down list of networks, click "Kovan Test Network". It will refresh and you will still have 0 ETH.
 
