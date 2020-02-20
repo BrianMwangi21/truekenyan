@@ -16,13 +16,13 @@ class App extends Component {
     all_articles : [],
     article : new Object,
     articleId : 0,
-    totalArticles : 0
+    totalArticles : 0,
+    secondsRemaining : 10
   };
 
   constructor(props) {
     super(props);
-    this.handleNextClick = this.handleNextClick.bind(this);
-    this.handlePreviousClick = this.handlePreviousClick.bind(this);
+    this.handleLoop = this.handleLoop.bind(this);
   };
 
   componentDidMount = async () => {
@@ -79,54 +79,35 @@ class App extends Component {
       }
     }
 
-    // Log all the articles
-    console.log(this.state.all_articles)
+    // Create the loop
+    this.loop = setInterval(() => this.handleLoop(), 10000);
   };
 
-  handlePreviousClick = async(event) => {
-    event.preventDefault();
+  handleLoop() {
+    var newSeconds = this.state.secondsRemaining - 1;
 
-    // Clear article array
-    this.setState({
-      article : new Object,
-      articleId : 0
-    });
+    if( newSeconds == 0 ) {
+      // Go to the previous index
+      var currentIndex = this.state.articleId - 1;
+      var newIndex = currentIndex - 1;
 
-    // Get the previous article
-    const previousId = this.state.articleId - 1;
+      // Check if all is well, then set the state
+      if( newIndex < 0 ) {
+        // Set to the latest index
+        newIndex = this.state.totalArticles - 1;
+      }
 
-    if( previousId < 1 ) {
-      previousId = 1;
+      // Now set state with new index
+      this.setState( {
+        article: this.state.all_articles[newIndex],
+        articleId: newIndex,
+        secondsRemaining : 10
+      })
+    }else {
+      this.setState({
+        secondsRemaining: newSeconds
+      });
     }
-
-    // Send previous id
-    this.setState( {
-      article: this.state.all_articles[previousId],
-      articleId : previousId
-    });
-  };
-
-  handleNextClick = async(event) => {
-    event.preventDefault();
-
-    // Clear article array
-    this.setState({
-      article : new Object,
-      articleId : 0
-    });
-
-    // Get the previous article
-    const nextId = this.state.articleId + 1;
-
-    if( nextId > this.state.totalArticles ) {
-      nextId = this.state.totalArticles;
-    }
-
-    // Send next id
-    this.setState( {
-      article: this.state.all_articles[nextId],
-      articleId : this.state.totalArticles
-    });
   };
 
   render() {
@@ -136,9 +117,7 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar />
-        <Main article={this.state.article}
-          handleNext={this.state.handleNextClick}
-          handlePrevious={this.state.handlePreviousClick} />
+        <Main article={this.state.article} secondsRemaining={this.state.secondsRemaining} />
         <Footer />
       </div>
     );

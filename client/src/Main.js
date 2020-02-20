@@ -18,16 +18,13 @@ class Main extends Component {
                             </div>
                         </div>
                         <div class="row justify-content-center mb-4">
-                                <div class="col-1">
-                                    <button class="form-control" onClick={this.props.handlePrevious} >Prev</button>
-                                </div>
                                 <div class="col-10">
                                     <hr />
                                         { ReactHtmlParser(this.props.article.articleContent) }
                                     <hr />
                                 </div>
-                                <div class="col-1">
-                                    <button class="form-control" onClick={this.props.handleNext} >Next</button>
+                                <div class="col-10">
+                                    {this.props.secondsRemaining} <strong>"natoka saa hizi" seconds</strong> left before next article
                                 </div>
                         </div>
                     </div>
