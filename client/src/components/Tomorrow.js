@@ -82,6 +82,9 @@ class Tomorrow extends Component {
     };
 
     render() {
+        if (!this.state.web3) {
+            return <div>Loading...</div>;
+        }
         return(
             <div>
                 <Navbar />
