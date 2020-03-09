@@ -5,7 +5,6 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Tomorrow from './components/Tomorrow'
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
     <Router>
