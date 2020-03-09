@@ -8,6 +8,7 @@
     "react": "16.11.0",
     "react-dom": "16.11.0",
     "react-html-parser": "^2.0.2",
+    "react-masonry-css": "^1.0.14",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "web3": "1.2.2"
